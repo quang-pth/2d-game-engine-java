@@ -6,7 +6,6 @@ import org.lwjgl.BufferUtils;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
@@ -172,5 +171,10 @@ public class Shader {
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();
         glUniform1i(varLocation, slot);
+    }
+    public void uploadIntArray(String varName, int[] array) {
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform1iv(varLocation, array);
     }
 }
