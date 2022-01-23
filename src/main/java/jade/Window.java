@@ -23,9 +23,9 @@ public class Window {
         this.width = 1920;
         this.height = 1080;
         this.title = "Mario";
-        r = 0.7f;
-        b = 0.2f;
-        g = 0.1f;
+        r = 1f;
+        b = 1f;
+        g = 1f;
         a = 1;
     }
 
@@ -111,6 +111,11 @@ public class Window {
 
         // make sure we can use the bindings
         GL.createCapabilities();
+
+        glEnable(GL_BLEND);
+        // blending color function:
+        // cf = ca * sa + cs(1-sa)
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
         Window.changeScene(0);
     }
