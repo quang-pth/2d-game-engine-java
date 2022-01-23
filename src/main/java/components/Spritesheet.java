@@ -41,7 +41,7 @@ public class Spritesheet {
         }
     }
 
-    public Sprite getSpirte(int index) {
+    public Sprite getSprite(int index) {
         return this.sprites.get(index);
     }
 }

@@ -1,5 +1,6 @@
 package renderer;
 
+import components.Sprite;
 import components.SpriteRenderer;
 import jade.Window;
 import org.joml.Vector2f;
@@ -107,9 +108,21 @@ public class RenderBatch {
     }
 
     public void render() {
-        // re-buffer all data every time
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebufferData = false;
+        for (int i = 0; i < numSprites; i++) {
+            SpriteRenderer spr = sprites[i];
+            if (spr.isDirty()) {
+                loadVertexProperties(i);
+                spr.setClean();
+                rebufferData = true;
+            }
+        }
+
+        if (rebufferData) {
+            // re-buffer all data every time
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
 
         // user shader
         shader.use();
