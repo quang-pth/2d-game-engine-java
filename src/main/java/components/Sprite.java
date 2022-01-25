@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import renderer.Texture;
 
 public class Sprite {
+    private float width, height;
     private Texture texture = null;
     private Vector2f[] texCoords = {
                 new Vector2f(1, 1),
@@ -42,5 +43,25 @@ public class Sprite {
 
     public void setTexCoords(Vector2f[] texCoords) {
         this.texCoords = texCoords;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setWidth(int spriteWidth) {
+        this.width = spriteWidth;
+    }
+
+    public void setHeight(int spriteHeight) {
+        this.height = spriteHeight;
+    }
+
+    public int getTexId() {
+        return texture == null ? -1 : texture.getId();
     }
 }
