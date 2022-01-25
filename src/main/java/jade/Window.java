@@ -3,6 +3,9 @@ package jade;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import scenes.LevelEditorScene;
+import scenes.LevelScene;
+import scenes.Scene;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -12,9 +15,10 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Window {
     private int width, height;
     private String title;
-    private long glfWindow;
-    public float r, g, b, a;
+    private long glfwWindow;
+    private ImGuiLayer imGuiLayer;
 
+    public float r, g, b, a;
     private static Window window = null;
 
     private static Scene currentScene;
@@ -33,18 +37,18 @@ public class Window {
         switch(newScene) {
             case 0:
                 currentScene = new LevelEditorScene();
-                currentScene.init();
-                currentScene.start();
                 break;
             case 1:
                 currentScene = new LevelScene();
-                currentScene.init();
-                currentScene.start();
                 break;
             default:
                 assert false: "Unknown Scene' " + newScene + "'";
                 break;
         }
+
+        currentScene.load();
+        currentScene.init();
+        currentScene.start();
     }
 
     public static Window get() {
@@ -66,8 +70,8 @@ public class Window {
         loop();
 
         // free the memory
-        glfwFreeCallbacks(glfWindow);
-        glfwDestroyWindow(glfWindow);
+        glfwFreeCallbacks(glfwWindow);
+        glfwDestroyWindow(glfwWindow);
 
         // terminate GLFW and free the error callback
         glfwTerminate();
@@ -90,24 +94,28 @@ public class Window {
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
         // create the window by return number as memory address
-        glfWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
-        if(glfWindow == NULL) {
+        glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+        if(glfwWindow == NULL) {
             throw new IllegalStateException("Failed to create the GLFW window.");
         }
 
         //
-        glfwSetCursorPosCallback(glfWindow, MouseListener::mousePosCallback);
-        glfwSetMouseButtonCallback(glfWindow, MouseListener::mouseButtonCallback);
-        glfwSetScrollCallback(glfWindow, MouseListener::mouseScrollCallback);
-        glfwSetKeyCallback(glfWindow, KeyListener::keyCallback);
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+        glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
+            Window.setWidth(newWidth);
+            Window.setHeight(newHeight);
+        });
 
         // Make the OpenGL text context
-        glfwMakeContextCurrent(glfWindow);
+        glfwMakeContextCurrent(glfwWindow);
         // enable v-sync
         glfwSwapInterval(1);
 
         // make the window visible
-        glfwShowWindow(glfWindow);
+        glfwShowWindow(glfwWindow);
 
         // make sure we can use the bindings
         GL.createCapabilities();
@@ -116,6 +124,8 @@ public class Window {
         // blending color function:
         // cf = ca * sa + cs(1-sa)
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        this.imGuiLayer = new ImGuiLayer(glfwWindow);
+        this.imGuiLayer.initImGui();
 
         Window.changeScene(0);
     }
@@ -125,7 +135,7 @@ public class Window {
         float endTime;
         float dt = -1.0f;
 
-        while(!glfwWindowShouldClose(glfWindow)) {
+        while(!glfwWindowShouldClose(glfwWindow)) {
             // poll events
             glfwPollEvents();
 
@@ -136,11 +146,30 @@ public class Window {
                 currentScene.update(dt);
             }
 
-            glfwSwapBuffers(glfWindow);
+            this.imGuiLayer.update(dt, currentScene);
+            glfwSwapBuffers(glfwWindow);
 
             endTime = (float) glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+
+        currentScene.saveExit();
+    }
+
+    public static int getWidth() {
+        return get().width;
+    }
+
+    public static int getHeight() {
+        return get().height;
+    }
+
+    public static void setWidth(int newWidth) {
+        get().width = newWidth;
+    }
+
+    public static void setHeight(int newHeight) {
+        get().height = newHeight;
     }
 }

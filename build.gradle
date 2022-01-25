@@ -10,8 +10,13 @@ repositories {
 }
 
 dependencies {
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.9'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    // IM GUI FILES
+    implementation fileTree("libs") {include '*.jar'}
 }
 
 project.ext.lwjglVersion = "3.2.3"
