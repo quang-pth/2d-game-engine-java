@@ -36,8 +36,8 @@ j  org.lwjgl.opengl.GL11C.nglGetIntegerv(IJ)V+0
 j  org.lwjgl.opengl.GL11C.glGetIntegerv(ILjava/nio/IntBuffer;)V+16
 j  org.lwjgl.opengl.GL11.glGetIntegerv(ILjava/nio/IntBuffer;)V+2
 j  util.AssetPool.getShader(Ljava/lang/String;)Lrenderer/Shader;+5
-j  jade.LevelEditorScene.loadResources()V+2
-j  jade.LevelEditorScene.init()V+214
+j  scenes.LevelEditorScene.loadResources()V+2
+j  scenes.LevelEditorScene.init()V+214
 j  jade.Window.changeScene(I)V+41
 j  jade.Window.init()V+162
 j  jade.Window.run()V+15
