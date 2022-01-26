@@ -8,7 +8,9 @@ import jade.GameObject;
 import jade.Prefabs;
 import jade.Transform;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
+import renderer.DebugDraw;
 import util.AssetPool;
 
 public class LevelEditorScene extends Scene {
@@ -66,9 +68,16 @@ public class LevelEditorScene extends Scene {
         AssetPool.getTexture("assets/images/blendImage2.png");
     }
 
+    float x = 0;
+    float y = 0;
+
     @Override
     public void update(float dt) {
         levelEditorStuff.update(dt);
+        DebugDraw.addCircle(new Vector2f(x, y), 64, new Vector3f(1, 0, 0), 1);
+        x += 50f * dt;
+        y += 50f * dt;
+
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(dt);
         }
