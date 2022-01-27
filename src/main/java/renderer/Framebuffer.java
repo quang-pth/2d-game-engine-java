@@ -10,7 +10,7 @@ public class Framebuffer {
         return fboID;
     }
 
-    public int getTexture() {
+    public int getTextureId() {
         return texture.getId();
     }
 
