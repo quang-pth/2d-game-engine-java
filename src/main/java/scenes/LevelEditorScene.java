@@ -94,6 +94,10 @@ public class LevelEditorScene extends Scene {
             gameObject.update(dt);
         }
 
+    }
+
+    @Override
+    public void render() {
         this.renderer.render();
     }
 
