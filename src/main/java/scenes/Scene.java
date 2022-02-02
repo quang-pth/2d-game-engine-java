@@ -8,6 +8,7 @@ import imgui.ImGui;
 import jade.Camera;
 import jade.GameObject;
 import jade.GameObjectDeserializer;
+import jade.Transform;
 import renderer.Renderer;
 
 import java.io.FileWriter;
@@ -68,6 +69,13 @@ public abstract class Scene {
 
     public void imgui() {
 
+    }
+
+    public GameObject createGameObject(String name) {
+        GameObject gameObject = new GameObject(name);
+        gameObject.addComponent(new Transform());
+        gameObject.transform = gameObject.getComponent(Transform.class);
+        return gameObject;
     }
 
     public void saveExit() {
