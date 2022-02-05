@@ -8,9 +8,7 @@ import org.joml.Vector2f;
 import util.AssetPool;
 
 public class LevelEditorScene extends Scene {
-    private GameObject obj1;
     private Spritesheet sprites;
-    private SpriteRenderer obj1Sprite;
 
     GameObject levelEditorStuff = this.createGameObject("LevelEditor");
 
@@ -21,8 +19,8 @@ public class LevelEditorScene extends Scene {
     @Override
     public void init() {
         loadResources();
-        sprites = AssetPool.getSprtesheet("assets/images/spritesheets/decorationsAndBlocks.png");
-        Spritesheet gizmos = AssetPool.getSprtesheet("assets/images/gizmos.png");
+        sprites = AssetPool.getSpritesheet("assets/images/spritesheets/decorationsAndBlocks.png");
+        Spritesheet gizmos = AssetPool.getSpritesheet("assets/images/gizmos.png");
 
         this.camera = new Camera(new Vector2f(-250, 0));
         levelEditorStuff.addComponent(new MouseControls());

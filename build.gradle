@@ -6,10 +6,16 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 
 repositories {
+    flatDir {
+        dirs 'libs'
+    }
     mavenCentral()
 }
 
 dependencies {
+    // Box2D
+    implementation name: 'jbox2d-library'
+
     // Gson
     implementation 'com.google.code.gson:gson:2.8.9'
 

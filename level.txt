@@ -131,12 +131,12 @@
         "type": "jade.Transform",
         "properties": {
           "position": {
-            "x": 163.66187,
-            "y": 275.59763
+            "x": 30.053123,
+            "y": 161.0589
           },
           "scale": {
-            "x": 31.0,
-            "y": 35.7
+            "x": 32.0,
+            "y": 32.0
           },
           "rotation": 0.0,
           "zIndex": 0,
@@ -147,10 +147,10 @@
         "type": "components.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
+            "x": 0.40784314,
+            "y": 0.9647059,
+            "z": 0.73333335,
+            "w": 0.80784315
           },
           "sprite": {
             "width": 16.0,

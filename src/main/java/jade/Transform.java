@@ -5,6 +5,7 @@ import editor.JImGui;
 import org.joml.Vector2f;
 
 public class Transform extends Component {
+
     public Vector2f position;
     public Vector2f scale;
     public float rotation = 0.0f;
@@ -28,6 +29,10 @@ public class Transform extends Component {
         this.zIndex = 0;
     }
 
+    public Transform copy() {
+        return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
+    }
+
 //    @Override
 //    public void imgui() {
 //        JImGui.drawVec2Control("Position", this.position);
@@ -35,10 +40,6 @@ public class Transform extends Component {
 //        JImGui.dragFloat("Rotation", this.rotation);
 //        JImGui.dragInt("Z-Index", this.zIndex);
 //    }
-
-    public Transform copy() {
-        return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
-    }
 
     public void copy(Transform to) {
         to.position.set(this.position);
@@ -48,11 +49,10 @@ public class Transform extends Component {
     @Override
     public boolean equals(Object o) {
         if (o == null) return false;
-        if(!(o instanceof Transform)) return false;
+        if (!(o instanceof Transform)) return false;
 
-        Transform t = (Transform) o;
-        return t.position.equals(this.position) && t.scale.equals(this.scale)
-                && t.rotation == this.rotation && t.zIndex == this.zIndex;
+        Transform t = (Transform)o;
+        return t.position.equals(this.position) && t.scale.equals(this.scale) &&
+                t.rotation == this.rotation && t.zIndex == this.zIndex;
     }
-
 }
